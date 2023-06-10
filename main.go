@@ -51,8 +51,9 @@ func serveApplication() {
 	protectedRoutes := router.Group("/api")
 	protectedRoutes.Use(middleware.JWTAuthMiddleware())
 	protectedRoutes.POST("/entry", controller.AddEntry)
-	protectedRoutes.GET("/entry", controller.GetAllEntries)
+	protectedRoutes.GET("/entries", controller.GetAllEntries)
 	protectedRoutes.POST("/entryType", controller.AddEntryType)
+	protectedRoutes.GET("/entryType/:id", controller.GetEntryTypeByID)
 
 	port := os.Getenv("PORT")
 	err := router.Run(":" + port)

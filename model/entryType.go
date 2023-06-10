@@ -17,3 +17,12 @@ func (entryType *EntryType) Save() (*EntryType, error) {
 	}
 	return entryType, nil
 }
+
+func FindEntryTypeById(id uint) (EntryType, error) {
+	var entryType EntryType
+	err := database.Database.Where("ID=?", id).Find(&entryType).Error
+	if err != nil {
+		return EntryType{}, err
+	}
+	return entryType, nil
+}

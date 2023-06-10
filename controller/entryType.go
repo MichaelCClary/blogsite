@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/michaelcclary/blogsite/model"
 	"net/http"
+	"strconv"
 )
 
 func AddEntryType(context *gin.Context) {
@@ -14,10 +15,27 @@ func AddEntryType(context *gin.Context) {
 	}
 
 	savedEntry, err := input.Save()
-
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
 	context.JSON(http.StatusCreated, gin.H{"data": savedEntry})
+}
+
+func GetEntryTypeByID(context *gin.Context) {
+	stringId := context.Param("id")
+	intId, err := strconv.Atoi(stringId)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	eType, err := model.FindEntryTypeById(uint(intId))
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	context.JSON(http.StatusCreated, gin.H{"data": eType})
 }
