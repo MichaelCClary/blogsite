@@ -7,6 +7,7 @@ import (
 
 type Entry struct {
 	gorm.Model
+	Title   string `gorm:"type:text" json:"title"`
 	Content string `gorm:"type:text" json:"content"`
 	UserID  uint
 }
