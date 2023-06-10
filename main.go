@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"github.com/michaelcclary/blogsite/controller"
+	"github.com/michaelcclary/blogsite/middleware"
 	"github.com/michaelcclary/blogsite/model"
 	"github.com/michaelcclary/blogsite/model/database"
 	"log"
@@ -42,6 +43,11 @@ func serveApplication() {
 	publicRoutes := router.Group("/auth")
 	publicRoutes.POST("/register", controller.Register)
 	publicRoutes.POST("/login", controller.Login)
+
+	protectedRoutes := router.Group("/api")
+	protectedRoutes.Use(middleware.JWTAuthMiddleware())
+	protectedRoutes.POST("/entry", controller.AddEntry)
+	protectedRoutes.GET("/entry", controller.GetAllEntries)
 
 	port := os.Getenv("PORT")
 	err := router.Run(":" + port)
