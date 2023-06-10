@@ -28,6 +28,10 @@ func loadDatabase() {
 	if err != nil {
 		log.Panicf("Auto Migrate Entry Failed:%v", err)
 	}
+	err = database.Database.AutoMigrate(&model.EntryType{})
+	if err != nil {
+		log.Panicf("Auto Migrate Entry Type Failed:%v", err)
+	}
 }
 
 func loadEnv() {
@@ -48,6 +52,7 @@ func serveApplication() {
 	protectedRoutes.Use(middleware.JWTAuthMiddleware())
 	protectedRoutes.POST("/entry", controller.AddEntry)
 	protectedRoutes.GET("/entry", controller.GetAllEntries)
+	protectedRoutes.POST("/entryType", controller.AddEntryType)
 
 	port := os.Getenv("PORT")
 	err := router.Run(":" + port)
