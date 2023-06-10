@@ -26,3 +26,13 @@ func FindEntryTypeById(id uint) (EntryType, error) {
 	}
 	return entryType, nil
 }
+
+func FindAllEntryTypes() ([]EntryType, error) {
+	var entryTypes []EntryType
+	err := database.Database.Find(&entryTypes).Error
+	if err != nil {
+		return []EntryType{}, err
+	}
+
+	return entryTypes, nil
+}

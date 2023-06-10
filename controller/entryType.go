@@ -31,11 +31,21 @@ func GetEntryTypeByID(context *gin.Context) {
 		return
 	}
 
-	eType, err := model.FindEntryTypeById(uint(intId))
+	entryType, err := model.FindEntryTypeById(uint(intId))
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	context.JSON(http.StatusCreated, gin.H{"data": eType})
+	context.JSON(http.StatusCreated, gin.H{"data": entryType})
+}
+
+func GetAllEntryTypes(context *gin.Context) {
+	entryTypes, err := model.FindAllEntryTypes()
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	context.JSON(http.StatusCreated, gin.H{"data": entryTypes})
 }
