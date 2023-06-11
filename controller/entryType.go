@@ -75,3 +75,16 @@ func UpdateEntryType(context *gin.Context) {
 
 	context.JSON(http.StatusOK, gin.H{"data": updatedEntry})
 }
+
+func DeleteEntrytype(context *gin.Context) {
+	//Verify that the entry exists
+	var entryType model.EntryType
+	if err := database.Database.Where("id = ?", context.Param("id")).First(&entryType).Error; err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": "Entry Type not found!"})
+		return
+	}
+
+	entryType.Delete()
+
+	context.JSON(http.StatusOK, gin.H{"status": "Entry Type successfully Deleted"})
+}

@@ -26,6 +26,10 @@ func (entryType *EntryType) Update(updatedEntryType EntryType) (*EntryType, erro
 	return entryType, nil
 }
 
+func (entryType *EntryType) Delete() {
+	database.Database.Delete(&entryType)
+}
+
 func FindEntryTypeById(id uint) (EntryType, error) {
 	var entryType EntryType
 	err := database.Database.Where("ID=?", id).First(&entryType).Error

@@ -54,8 +54,9 @@ func serveApplication() {
 	protectedRoutes.GET("/entries", controller.GetAllEntries)
 
 	protectedRoutes.POST("/entryType", controller.CreateEntryType)
+	protectedRoutes.PATCH("/entryType/:id", controller.UpdateEntryType)
+	protectedRoutes.DELETE("/entryType/:id", controller.DeleteEntrytype)
 	protectedRoutes.GET("/entryType/:id", controller.GetEntryTypeByID)
-	protectedRoutes.POST("/entryType/:id", controller.UpdateEntryType)
 	protectedRoutes.GET("/entryType", controller.GetAllEntryTypes)
 
 	port := os.Getenv("PORT")
