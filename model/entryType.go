@@ -10,8 +10,16 @@ type EntryType struct {
 	Name string `gorm:"type:text" json:"name"`
 }
 
-func (entryType *EntryType) Save() (*EntryType, error) {
+func (entryType *EntryType) Create() (*EntryType, error) {
 	err := database.Database.Create(&entryType).Error
+	if err != nil {
+		return &EntryType{}, err
+	}
+	return entryType, nil
+}
+
+func (entryType *EntryType) Update(updatedEntryType EntryType) (*EntryType, error) {
+	err := database.Database.Model(&entryType).Updates(updatedEntryType).Error
 	if err != nil {
 		return &EntryType{}, err
 	}
@@ -20,7 +28,7 @@ func (entryType *EntryType) Save() (*EntryType, error) {
 
 func FindEntryTypeById(id uint) (EntryType, error) {
 	var entryType EntryType
-	err := database.Database.Where("ID=?", id).Find(&entryType).Error
+	err := database.Database.Where("ID=?", id).First(&entryType).Error
 	if err != nil {
 		return EntryType{}, err
 	}

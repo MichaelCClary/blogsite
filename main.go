@@ -53,8 +53,9 @@ func serveApplication() {
 	protectedRoutes.POST("/entry", controller.AddEntry)
 	protectedRoutes.GET("/entries", controller.GetAllEntries)
 
-	protectedRoutes.POST("/entryType", controller.AddEntryType)
+	protectedRoutes.POST("/entryType", controller.CreateEntryType)
 	protectedRoutes.GET("/entryType/:id", controller.GetEntryTypeByID)
+	protectedRoutes.POST("/entryType/:id", controller.UpdateEntryType)
 	protectedRoutes.GET("/entryType", controller.GetAllEntryTypes)
 
 	port := os.Getenv("PORT")
