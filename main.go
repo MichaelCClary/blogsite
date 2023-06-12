@@ -43,10 +43,12 @@ func loadEnv() {
 
 func serveApplication() {
 	router := gin.Default()
+	router.LoadHTMLGlob("templates/*")
 
 	publicRoutes := router.Group("/auth")
 	publicRoutes.POST("/register", controller.Register)
 	publicRoutes.POST("/login", controller.Login)
+	router.GET("/", controller.HomePage)
 
 	protectedRoutes := router.Group("/api")
 	protectedRoutes.Use(middleware.JWTAuthMiddleware())
