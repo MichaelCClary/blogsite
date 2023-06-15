@@ -44,6 +44,7 @@ func loadEnv() {
 func serveApplication() {
 	router := gin.Default()
 	router.LoadHTMLGlob("templates/*")
+	router.Static("/static", "./static/")
 
 	publicRoutes := router.Group("/auth")
 	publicRoutes.POST("/register", controller.Register)
